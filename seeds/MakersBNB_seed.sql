@@ -1,6 +1,6 @@
 -- USERS TABLE
-DROP TABLE IF EXISTS users;
-DROP SEQUENCE IF EXISTS users_seq;
+DROP TABLE IF EXISTS users CASCADE;
+DROP SEQUENCE IF EXISTS users_seq CASCADE;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -13,8 +13,8 @@ INSERT INTO users (name, email, password) VALUES ('John', 'test@gmail.com', '123
 INSERT INTO users (name, email, password) VALUES ('Jane', 'test2@gmail.com', '1234');
 
 -- ROOMS TABLE
-DROP TABLE IF EXISTS rooms;
-DROP SEQUENCE IF EXISTS rooms_seq;
+DROP TABLE IF EXISTS rooms CASCADE;
+DROP SEQUENCE IF EXISTS rooms_seq CASCADE;
 
 CREATE TABLE rooms (
     id SERIAL PRIMARY KEY,
