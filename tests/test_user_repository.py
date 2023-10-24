@@ -28,7 +28,8 @@ def test_user_repo_create(db_connection):
 
     user_repo = UserRepository(db_connection)
 
-    user_repo.create("Romain", "romaingrude@yahoo.fr", "testpassword")
+    new_user = User(None, "Romain", "romaingrude@yahoo.fr", "testpassword")
+    user_repo.create(new_user)
 
     # Get the created user from the repository
     users = user_repo.all()
@@ -73,7 +74,8 @@ def test_user_repo_check_password(db_connection):
     db_connection.seed("seeds/MakersBNB_seed.sql")
 
     user_repo = UserRepository(db_connection)
-    user_repo.create("Romain", "romaingrude@yahoo.fr", "testpassword")
+    new_user = User(None, "Romain", "romaingrude@yahoo.fr", "testpassword")
+    user_repo.create(new_user)
     assert user_repo.check_password("romaingrude@yahoo.fr", "testpassword") == True
     assert user_repo.check_password("romaingrude@yahoo.fr", "wrongpassword") == False
 
@@ -88,7 +90,8 @@ def test_user_repo_update(db_connection):
 
     user_repo = UserRepository(db_connection)
 
-    user1 = user_repo.create("Romain", "romaingrude@yahoo.fr", "testpassword")
+    user1 = User(None, "Romain", "romaingrude@yahoo.fr", "testpassword")
+    user_repo.create(user1)
 
     hashed_password = hashlib.sha256("testpassword".encode("utf-8")).hexdigest()
     # First create a user
@@ -137,8 +140,10 @@ def test_user_repo_delete(db_connection):
 
     user_repo = UserRepository(db_connection)
 
-    user1 = user_repo.create("Romain", "testemail@gmail.com", "testpassword")
-    user2 = user_repo.create("Tristan", "emailtest@yahoo.com", "123321")
+    user1 = User(None, "Romain", "testemail@gmail.com", "testpassword")
+    user_repo.create(user1)
+    user2 = User(None, "Tristan", "emailtest@yahoo.com", "123321")
+    user_repo.create(user2)
 
     hashed_password_user2 = hashlib.sha256("123321".encode("utf-8")).hexdigest()
 

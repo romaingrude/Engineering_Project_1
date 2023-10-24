@@ -13,13 +13,13 @@ class UserRepository:
         ]
         return users
 
-    def create(self, name, email, password):
-        binary_password = password.encode("utf-8")
+    def create(self, user):
+        binary_password = user.password.encode("utf-8")
         hashed_password = hashlib.sha256(binary_password).hexdigest()
 
         self._connection.execute(
             "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)",
-            [name, email, hashed_password],
+            [user.name, user.email, hashed_password],
         )
 
     def check_password(self, email, password_attempt):
