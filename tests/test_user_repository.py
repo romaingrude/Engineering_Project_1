@@ -101,7 +101,9 @@ def test_user_repo_update(db_connection):
         User(3, "Romain", "romaingrude@yahoo.fr", hashed_password),
     ]
     # Then update it, name and email
-    user_repo.update("romaingrude@yahoo.fr", "Romain Grude", "new@gmail.com")
+    user_repo.update(
+        "romaingrude@yahoo.fr", new_name="Romain Grude", new_email="new@gmail.com"
+    )
 
     # Check if the user has been updated
     assert user_repo.all() == [
@@ -111,7 +113,7 @@ def test_user_repo_update(db_connection):
     ]
 
     # Then update it, only name
-    user_repo.update("new@gmail.com", "TESTNAME")
+    user_repo.update("new@gmail.com", new_name="TESTNAME")
 
     assert user_repo.all() == [
         User(1, "John", "test@gmail.com", "1234"),
