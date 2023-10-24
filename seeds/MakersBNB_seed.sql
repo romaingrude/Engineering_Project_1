@@ -12,6 +12,7 @@ CREATE TABLE users (
 INSERT INTO users (name, email, password) VALUES ('John', 'test@gmail.com', '1234');
 INSERT INTO users (name, email, password) VALUES ('Jane', 'test2@gmail.com', '1234');
 
+
 -- ROOMS TABLE
 DROP TABLE IF EXISTS rooms CASCADE;
 DROP SEQUENCE IF EXISTS rooms_seq CASCADE;
