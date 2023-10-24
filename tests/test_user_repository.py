@@ -78,6 +78,7 @@ def test_user_repo_check_password(db_connection):
     user_repo.create(new_user)
     assert user_repo.check_password("romaingrude@yahoo.fr", "testpassword") == True
     assert user_repo.check_password("romaingrude@yahoo.fr", "wrongpassword") == False
+    assert user_repo.check_password("wrong@yahoo.fr", "testpassword") == False
 
 
 """

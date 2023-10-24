@@ -27,15 +27,15 @@ class UserRepository:
         binary_password_attempt = password_attempt.encode("utf-8")
         hashed_password_attempt = hashlib.sha256(binary_password_attempt).hexdigest()
 
-        # Check whether there is a user in the database with the given email
-        # and a matching password hash, using a SELECT statement.
-        rows = self._connection.execute(
-            "SELECT * FROM users WHERE email = %s AND password = %s",
-            [email, hashed_password_attempt],
-        )
-        print(f"DEBUG {rows}")
-        # If that SELECT finds any rows, the password is correct.
-        return len(rows) > 0
+        # Retrieve the user from the database based on the email
+        user = self.find_by_email(email)
+
+        # If no user found or the stored password doesn't match the hashed password attempt, return False
+        if user is None or user.password != hashed_password_attempt:
+            return False
+
+        # Password is correct
+        return True
 
     def find_by_email(self, email):
         rows = self._connection.execute("SELECT * FROM users WHERE email = %s", [email])
