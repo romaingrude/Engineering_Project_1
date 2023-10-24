@@ -1,0 +1,24 @@
+body{
+    background-color:#ffffff;
+}
+
+#header_div{
+    text-align:center;
+    font-family:Impact, sans-serif;
+    color:#000000;
+    background-color:#ffffff;
+}
+
+#topflavour_div{
+    text-align:center;
+    font-family:Georgia, serif;
+    font-size:14px;
+    font-style:normal;
+    font-weight:normal;
+    color:#000000;
+    background-color:#ffffff;
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle
+}
+
