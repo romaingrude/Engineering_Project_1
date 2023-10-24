@@ -5,7 +5,7 @@ class BookingRepository:
         self._connection = connection
 
     def all(self):
-        rows = self._connection.execute('SELECT * from bookings')
+        rows = self._connection.execute('SELECT * FROM bookings')
         bookings = []
         for row in rows:
             item = Booking(row["id"], row["user_id"], row["room_id"], row["confirmation"], row["booking_start"], row["booking_end"])
