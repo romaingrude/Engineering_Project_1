@@ -1,18 +1,36 @@
 from playwright.sync_api import Page, expect
+import pytest
+from app import app
+from lib.user_repository import UserRepository
+from lib.rooms_repository import RoomsRepository
+from lib.user import User
+from lib.rooms import Rooms
 
 # Tests for your routes go here
 
 """
-We can render the index page
+Ensures that the signup page is rendered correctly
 """
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    with app.test_client() as client:
+        yield client
 
+def test_signup_page(client):
+    response = client.get('/')
+    assert b'Sign Up' in response.data
+    assert b'Name:' in response.data
+    assert b'Email:' in response.data
+    assert b'Password:' in response.data
+    assert b'Sign Up' in response.data
 
-def test_get_index(page, test_web_address):
-    # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/index")
+def test_registration(client):
+    data = {
+        'name': 'testuser',
+        'email': 'testuser@example.com',
+        'password': 'testpassword'
+    }
+    response = client.post('/register', data=data, follow_redirects=True)
+    assert b'Registration Successful' in response.data
 
-    # We look at the <p> tag
-    strong_tag = page.locator("p")
-
-    # We assert that it has the text "This is the homepage."
-    expect(strong_tag).to_have_text("This is the homepage.")

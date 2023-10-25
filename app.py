@@ -1,20 +1,32 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, request
 from lib.database_connection import get_flask_database_connection
+from lib.user import User
+from lib.user_repository import UserRepository
+from lib.rooms import Rooms
+from lib.rooms_repository import RoomsRepository
 
-# Create a new Flask app
 app = Flask(__name__)
 
-# == Your Routes Here ==
 
-
-# GET /index
-# Returns the homepage
-# Try it:
 #   ; open http://localhost:5000/index
-@app.route("/index", methods=["GET"])
-def get_index():
-    return render_template("index.html")
+
+@app.route('/')
+def signup():
+    return render_template('signup.html')
+
+@app.route('/register', methods=['POST'])
+def register():
+    name = request.form['name']
+    email = request.form['email']
+    password = request.form['password']
+
+    new_user = User(id=None, name=name, email=email, password=password)
+    SQL = f"INSERT INTO users (name, email, password) VALUES ('{name}', '{email}', '{password}');" 
+    db = get_flask_database_connection(app)
+    print(f"db name{db._database_name()}")
+    db.execute(SQL)
+    return "Registration Successful"
 
 
 # These lines start the server if you run this file directly
