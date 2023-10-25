@@ -21,16 +21,14 @@
       </form>
     </center>
     {% for room in rooms %}
-    <div>
+    <p>
       Name: <a href = "/rooms/{{room.id}}">
         {{room.name}}
-      </a><br>  
+      </a><br>
       Description: {{room.description}}
     <br>
       Price: £{{room.price}}
-    </div><br>
+    </p><br>
     {% endfor %}  
-
-
   </body>
 </html>
