@@ -4,6 +4,8 @@ from lib.database_connection import get_flask_database_connection
 from lib.user_repository import UserRepository
 from lib.rooms import Rooms
 from lib.rooms_repository import RoomsRepository
+from lib.booking import Booking
+from lib.booking_repository import BookingRepository
 import secrets
 
 # Create a new Flask app
@@ -20,7 +22,7 @@ app.secret_key = secret_key
 def get_index():
     return render_template("index.html")
 
-
+# LOGIN
 @app.route("/login")
 def login():
     return render_template("login.html")
@@ -53,7 +55,6 @@ def login_post():
 
     return render_template("login.html", error_message=" ".join(errors))
 
-
 @app.route("/temp")
 def temp_account():
     if "user_id" not in session:
@@ -63,6 +64,7 @@ def temp_account():
         # The user is logged in, display their account page.
         return render_template("temp.html")
 
+# ROOMS
 @app.route("/rooms", methods=["GET"])
 def get_rooms():
     connection = get_flask_database_connection(app)
@@ -77,6 +79,20 @@ def get_single_room(id):
     room = room_repo.find(id)
 
     return render_template("rooms/room_show.html", room=room)
+
+# BOOKINGS
+@app.route("/bookings/<booking_id>", methods=["GET"])
+def get_room_name_and_description_and_other_requests(booking_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    booking = booking_repository.find_with_room(booking_id)
+    user = booking_repository.find_with_user(booking_id)
+    bookings = booking_repository.find_all_bookings_for_this_room(booking_id)
+    return render_template("bookings/show.html", booking=booking, user=user bookings=bookings)
+
+
+
+# [(Booking(1, 1, 1, True, 2021-01-01, 2021-01-02), Rooms(1, Room 1, 100.0, This is a room, 1))]
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

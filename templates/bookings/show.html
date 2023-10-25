@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+</head>
+<body>
+    <h1 class="title">Request for '{{ booking[1].name }}'</h1>
+    <p class="description">{{ booking[1].description }}</p>
+
+    <h3 class="user_email"></h3>
+    <h3 class="booking_date"></h3>
+    <h3 class="spaces_booked"></h3>
+
+    <h5>Other Requests for this Space</h5>
+        <div class="booking-card">
+            {% for booking in bookings %}
+            {% if booking[0].confirmation == True %}
+                <p class="booking_name">{{ booking[1].name }}</p>
+                <p class="confirmation">Confirmed</p>
+                <p class="start_date">{{ booking[0].booking_start }}</p>
+                {% else %}
+                <p class="booking_name">{{ booking[1].name }}</p>
+                <p class="confirmation">Not confirmed</p>
+                <p class="start_date">{{ booking[0].booking_start }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+</body>
+</html>
