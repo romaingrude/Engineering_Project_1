@@ -12,6 +12,7 @@ CREATE TABLE users (
 INSERT INTO users (name, email, password) VALUES ('John', 'test@gmail.com', '1234');
 INSERT INTO users (name, email, password) VALUES ('Jane', 'test2@gmail.com', '1234');
 
+
 -- ROOMS TABLE
 DROP TABLE IF EXISTS rooms CASCADE;
 DROP SEQUENCE IF EXISTS rooms_seq CASCADE;
@@ -51,3 +52,4 @@ CREATE TABLE bookings (
 
 INSERT INTO bookings (user_id, room_id, confirmation, booking_start, booking_end) VALUES (1, 1, True, '2021-01-01', '2021-01-02');
 INSERT INTO bookings (user_id, room_id, confirmation, booking_start, booking_end) VALUES (2, 2, False, '2021-01-01', '2021-01-02');
+
