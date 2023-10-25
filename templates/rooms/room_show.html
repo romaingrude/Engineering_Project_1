@@ -1,34 +1,80 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-  <title>Book a Space - {{room.name}}</title>
+  <title>Book a Space - {{ room.name }}</title>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="/static/room_show.css">
+  <style>
+    .unavailable-date span {
+      background-color: #ccc !important;
+      color: #999 !important;
+    }
+  </style>
 </head>
-  <body>
 
-    <div class="header">
-        <a href="#default" class="logo">Logo</a>
-        <div class="header-right">
-          <a class="active" href="/rooms">Rooms</a>
-          <a href="">Bookings</a>
-          <a href="/login">Sign Out</a>
-        </div>
-      </div>
+<body>
+  <div class="header">
+    <a href="#default" class="logo">Logo</a>
+    <div class="header-right">
+      <a class="active" href="/rooms">Rooms</a>
+      <a href="/bookings">Bookings</a>
+      <a href="/logout">Sign Out</a>
+    </div>
+  </div>
+  <center>
+    <h1>{{ room.name }}</h1>
+    <p class="custom-test">
+      Description: {{ room.description }}<br>
+      Price: £{{ room.price }}
+    </p>
+    <br><br>
+    <label for="startdate">Start Date</label>
+    <input type="text" id="startdate" name="startdate">
+    <label for="enddate">End Date</label>
+    <input type="text" id="enddate" name="enddate">
+    <p>
+      <button id="submit-btn">Submit</button>
+    </p>
+    <input type="button" value="Back" onclick="history.back()">
+  </center>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script>
+    $(function () {
+      const startDateField = $("#startdate");
+      const endDateField = $("#enddate");
+      const minDate = new Date().toISOString().split("T")[0]; // Update minDate value
+      const bookedDates = {{ booked_dates | tojson
+    }};
 
-    <center>
-    <h1>{{room.name}}</h1>
-            <p>
-            Description: {{room.description}}<br>
-            Price: £{{room.price}}
-            </p>
-          <br><br>
-           <form action="" target="_blank">
-            <button type="submit"> Request to Book </button>
-            </form>
-            <br>
-            <form>
-                <input type="button" value="Back" onclick="history.back()">
-               </form>
-        </center>
+    function formatDateToYYMMDD(date) {
+      return date.toISOString().split("T")[0];
+    }
 
-  </body>
-</html>   
+    function isDateBooked(date) {
+      for (const range of bookedDates) {
+        const [start, end] = range;
+        if (date >= new Date(start) && date <= new Date(end)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    startDateField.datepicker({
+      minDate: formatDateToYYMMDD(new Date(minDate)), // Format to "yy-mm-dd"
+      // ... rest of your code
+    });
+
+    endDateField.datepicker({
+      minDate: formatDateToYYMMDD(new Date(minDate)), // Format to "yy-mm-dd"
+      // ... rest of your code
+    });
+      // ... rest of your code
+    });
+  </script>
+</body>
+
+</html>

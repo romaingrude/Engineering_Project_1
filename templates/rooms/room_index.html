@@ -1,34 +1,37 @@
 <html>
-  <head>
-    <title>MakersBNB - Book a Space </title>
-    <meta charset="utf-8">
-  </head>
-  <body>
 
-    <div class="header">
-      <a href="" class="logo">Logo</a>
-      <div class="header-right">
-        <a class="active" href="/rooms">Rooms</a>
-        <a href="/bookings">Bookings</a>
-        <a href="/login">Sign Out</a>
-      </div>
+<head>
+  <title>MakersBNB - Book a Space </title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="" class="logo">Logo</a>
+    <div class="header-right">
+      <a class="active" href="/rooms">Rooms</a>
+      <a href="/bookings">Bookings</a>
+      <a href="/login">Sign Out</a>
+    </div>
 
     <center>
-    <h1>Book a Space</h1>
-    
-    <form action="/rooms" target="_blank">
-      <button type="submit">List a Space</button>
+      <h1>Book a Space</h1>
+
+      <form action="/rooms" target="_blank">
+        <button type="submit">List a Space</button>
       </form>
     </center>
     {% for room in rooms %}
     <p>
-      Name: <a href = "/rooms/{{room.id}}">
+      Name: <a href="/rooms/{{room.id}}">
         {{room.name}}
       </a><br>
       Description: {{room.description}}
-    <br>
+      <br>
       Price: £{{room.price}}
     </p><br>
-    {% endfor %}  
-  </body>
+    {% endfor %}
+</body>
+
 </html>
