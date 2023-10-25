@@ -28,10 +28,10 @@ class BookingRepository:
     
     def find_with_user(self, booking_id):
         rows = self._connection.execute(
-            "SELECT bookings.id, bookings.confirmation, bookings.booking_start, bookings.booking_end, users.id AS user_id, users.name, users.email, FROM bookings JOIN userss ON users.id = bookings.user_id WHERE bookings.id = %s", [booking_id])
+            "SELECT bookings.id, bookings.confirmation, bookings.booking_start, bookings.booking_end, users.id AS user_id, users.name, users.email, users.password FROM bookings JOIN users ON users.id = bookings.user_id WHERE bookings.id = %s", [booking_id])
         for row in rows:
             user = User(row["id"], row["name"], row["email"], row["password"])
-            return (Booking(row["id"], row["user_id"], row["room_id"], row["confirmation"], row["booking_start"], row["booking_end"]), user)
+            return user
         
     def find_all_bookings_for_this_room(self, booking_id):
         rows = self._connection.execute(

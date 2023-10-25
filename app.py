@@ -88,7 +88,7 @@ def get_room_name_and_description_and_other_requests(booking_id):
     booking = booking_repository.find_with_room(booking_id)
     user = booking_repository.find_with_user(booking_id)
     bookings = booking_repository.find_all_bookings_for_this_room(booking_id)
-    return render_template("bookings/show.html", booking=booking, user=user bookings=bookings)
+    return render_template("bookings/show.html", booking=booking, user=user, bookings=bookings)
 
 
 
