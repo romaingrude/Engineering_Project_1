@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <link rel="stylesheet" href="./css/allBookings_styles.css">
 <title>
-Requests</title>
+Requests | MakersBnB</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="MakersBnB user's booking requests.">
 </head>
@@ -14,25 +14,40 @@ Requests</title>
     </div>
     
     <ul id="menulinks_div">
-        <li><a href="home.html">Home</a></li>
-        <li><a href="staff.html">Staff</a></li>
-        <li><a href="positions.html">Positions</a></li>
-        <li><a href="courses.html">Courses</a></li>
+        <li id="menuitem"><a href="spaces.html">Spaces</a></li>
+        <li id="menuitem"><a href="allBookings.html">Requests</a></li>
+        <li id="menuitem"><a href="signout.html">Sign out</a></li>
     </ul>
 
 <body>
 <div id="title_div">Requests</div>
 <div id="topflavour_div">All requests made by and for the user {{username}}.</div>
 
-    <ul id="requestedBookings_div">
-        {% for booking in requestedBookings %}
-            <li>
-                <li>{{booking.location}}</li>
-                <li>{{booking.confirmation}}</li>
-                <li>{{booking.date}}</li>
-            </li>
-        {% endfor %}
-    </ul>
+<div class="parent">
+    <div class="child">
+        <ul id="requestedBookings_div">
+            {% for booking in requestedBookings %}
+                <li>
+                    <li>{{booking.location}}</li>
+                    <li>{{booking.confirmation}}</li>
+                    <li>{{booking.date}}</li>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="child">
+        <ul id="bookingRequests_div">
+            {% for booking in bookingRequests %}
+                <li>
+                    <li>{{booking.location}}</li>
+                    <li>{{booking.confirmation}}</li>
+                    <li>{{booking.date}}</li>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
 </body>
 </html>
