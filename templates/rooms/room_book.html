@@ -11,21 +11,35 @@
       background-color: #ccc !important;
       color: #999 !important;
     }
+
+    body {
+      background-image: url("/static/background.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
   </style>
 </head>
 
 <body>
   <div class="header">
-    <a href="#default" class="logo">Logo</a>
-    <div class="header-right">
-      <a class="active" href="/rooms">Rooms</a>
+    <a href="" class="logo">
+      <img src="/static/logo.png" alt="MakersBNB Logo">
+    </a>
+    <div class="menu-right">
+      <a href="/rooms">Rooms</a>
       <a href="/bookings">Bookings</a>
+      {% if "user_id" in session %}
       <a href="/logout">Sign Out</a>
+      {% else %}
+      <a href="/login">Log In</a>
+      <a href="/register">Register</a>
+      {% endif %}
     </div>
   </div>
   <center>
     <h1>{{ room.name }}</h1>
-    <p class="custom-test">
+    <p class="room-details">
       Price: £{{ room.price }}
     </p>
     <br><br>
@@ -40,7 +54,7 @@
       <p>
         {{ form.submit() }}
       </p>
-      <input type="button" value="Back" class="back-button" onclick="history.back()">
+      <input type="button" value="Cancel" class="back-button" onclick="window.location.href='/rooms'">
       {% if error_message %}
       <p class="error-message">{{ error_message }}</p>
       {% endif %}
