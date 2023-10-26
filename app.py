@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, session, redirect, url_for
+from flask import Flask, request, render_template, session, redirect, url_for, jsonify
 from lib.database_connection import get_flask_database_connection
 from lib.user_repository import UserRepository
 from lib.rooms_repository import RoomsRepository
@@ -8,7 +8,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import DateField
 from wtforms.validators import DataRequired
 from wtforms import validators, SubmitField
-from datetime import datetime
+from datetime import datetime, timedelta
 from lib.calendar_repository import CalendarRepository
 
 # Create a new Flask app
@@ -42,10 +42,47 @@ def format_date(date):
 app.jinja_env.filters["format_date"] = format_date
 
 
-@app.route("/confirmation", methods=["GET", "POST"])
+from flask import request, redirect, url_for, session
+from datetime import datetime
+
+
+@app.route("/confirmation", methods=["POST"])
 def confirmation():
-    startdate = session["startdate"]
-    enddate = session["enddate"]
+    if request.method == "POST":
+        start_date = request.form["startdate"]
+        end_date = request.form["enddate"]
+
+        # Convert the date strings to datetime objects
+        start_date = datetime.strptime(start_date, "%Y-%m-%d")
+        end_date = datetime.strptime(end_date, "%Y-%m-%d")
+
+        # Retrieve user ID from the session
+        user_id = session.get("user_id")
+
+        if user_id is not None:
+            # Add the booking to the database
+            connection = get_flask_database_connection(app)
+            calendar_repo = CalendarRepository(connection)
+            room_id = 1  # Replace with the actual room ID
+            success = calendar_repo.add_booked_date(
+                user_id, room_id, start_date, end_date
+            )
+
+            if success:
+                # Set a variable to indicate a successful booking
+                session["booking_complete"] = True
+                return redirect(url_for("room_show", id=room_id))
+            else:
+                # Handle the case where the booking could not be added to the database
+                # You can display an error message or take appropriate action
+                return redirect(
+                    url_for("room_show", id=room_id)
+                )  # Redirect to the room page
+        else:
+            # Handle the case where the user is not logged in
+            # You can display an error message or redirect to the login page
+            return redirect(url_for("login"))
+
     return render_template("confirmation.html")
 
 
@@ -108,6 +145,9 @@ def get_rooms():
     return render_template("rooms/room_index.html", rooms=rooms)
 
 
+from datetime import date, timedelta
+
+
 @app.route("/rooms/<id>", methods=["GET"])
 def get_single_room(id):
     connection = get_flask_database_connection(app)
@@ -115,20 +155,32 @@ def get_single_room(id):
     room = room_repo.find(id)
 
     # Calculate the minimum date (today)
-    min_date = datetime.now().date()
+    min_date = date.today().isoformat()
 
     # Fetch the booked dates for this room using CalendarRepository
     calendar_repo = CalendarRepository(connection)
-    booked_dates = [
-        [date.strftime("%Y-%m-%d") for date in range]
-        for range in calendar_repo.get_booked_dates_for_room(room.id)
+    booked_dates_list = calendar_repo.get_booked_dates_for_room(room.id)
+
+    # Format the dates as YYYY-MM-DD
+    formatted_booked_dates = [
+        [start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d")]
+        for start_date, end_date in booked_dates_list
     ]
-    print(min_date)  # Add this line to check min_date value
+
+    # Create the booked_dates_dic dictionary
+    booked_dates_dic = {}
+    for i, date_range in enumerate(formatted_booked_dates, start=1):
+        start_date, end_date = date_range
+        booked_dates_dic[i] = {"start": start_date, "end": end_date}
+
+    form = InfoForm()  # Instantiate the form
+
     return render_template(
         "rooms/room_show.html",
         room=room,
         min_date=min_date,
-        booked_dates=[str(date) for date in booked_dates],
+        booked_dates=booked_dates_dic,  # Pass the correctly formatted dates to the template
+        form=form,
     )
 
 

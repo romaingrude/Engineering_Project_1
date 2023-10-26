@@ -5,7 +5,7 @@ class CalendarRepository:
     def __init__(self, connection):
         self._connection = connection
 
-    def add_booked_date(self, room_id, start_date, end_date):
+    def add_booked_date(self,user_id, room_id, start_date, end_date):
         self._connection.execute(
             "INSERT INTO bookings (room_id, booking_start, booking_end) VALUES (%s, %s, %s)",
             [room_id, start_date, end_date],
