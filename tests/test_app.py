@@ -112,4 +112,4 @@ class TestLogin:
         page.click("text=Log in")
 
         h1_tag = page.locator("h1")
-        expect(h1_tag).to_have_text("Login Successful")
+        expect(h1_tag).to_have_text("Book a Space")

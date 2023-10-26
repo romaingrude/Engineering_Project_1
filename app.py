@@ -20,6 +20,7 @@ from wtforms import validators, SubmitField
 from datetime import datetime, date, timedelta
 from lib.calendar_repository import CalendarRepository
 from lib.user import User
+from lib.rooms import Rooms
 
 
 app = Flask(__name__)
