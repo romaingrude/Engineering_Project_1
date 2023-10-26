@@ -1,3 +1,4 @@
+
 import os
 from flask import Flask, request, render_template, session, redirect, url_for
 from lib.database_connection import get_flask_database_connection
@@ -5,9 +6,44 @@ from lib.user_repository import UserRepository
 from lib.rooms import Rooms
 from lib.rooms_repository import RoomsRepository
 import secrets
+from lib.user import User
 
-# Create a new Flask app
+
 app = Flask(__name__)
+
+
+#   ; open http://localhost:5000/index
+
+@app.route('/register')
+def signup():
+    return render_template('signup.html')
+
+@app.route('/register', methods=['POST'])
+def register():
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    email = request.form['email']
+    password = request.form['password']
+    user_repo = UserRepository(get_flask_database_connection(app))
+
+    full_name = f"{first_name} {last_name}"
+
+    existing_user = user_repo.find_by_email(email)
+
+    if existing_user:
+        return render_template('signup.html', email_error="An account with this email already exists.")
+
+    if (
+        len(password) < 8
+        or not any(char.isdigit() for char in password)
+        or not any(char in '!@#$%^&*' for char in password)
+    ):
+        return render_template('signup.html', password_error="Password does not meet the requirements.")
+    
+    new_user = User(id=None, name=full_name, email=email, password=password)
+    user_repo.create(new_user)
+
+    return redirect(url_for("get_index"))
 
 # Generate a secret key
 secret_key = secrets.token_hex(16)
@@ -56,6 +92,7 @@ def create_new_room():
 @app.route("/index", methods=["GET"])
 def get_index():
     return render_template("index.html")
+
 
 
 @app.route("/login")
