@@ -23,11 +23,13 @@ def get_index():
     return render_template("index.html")
 
 @app.route('/requests')
-def get_albums():
+def get_requests():
+    # ToDo: Get User Id
+    userId = 2
     connection = get_flask_database_connection(app)
     repository = BookingRepository(connection)
-    requested = repository.all()
-    requests = repository.all()
+    requested = repository.getRequestedByUserId(userId)
+    requests = repository.getRequestsForUserId(userId)
     return render_template("allBookings.html", requestedBookings=requested, bookingRequests=requests)
 
 @app.route("/login")

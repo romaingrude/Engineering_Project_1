@@ -1,4 +1,5 @@
 from lib.booking import Booking
+from lib.request import Request
 
 class BookingRepository:
     def __init__(self, connection):
@@ -11,6 +12,30 @@ class BookingRepository:
             item = Booking(row["id"], row["user_id"], row["room_id"], row["confirmation"], row["booking_start"], row["booking_end"])
             bookings.append(item)
         return bookings
+
+    def getRequestedByUserId(self, userId):
+        rows = self._connection.execute('SELECT b.id, b.user_id, b.room_id, b.confirmation, b.booking_start, r.name '
+                                        'FROM bookings AS b ' 
+                                        'INNER JOIN rooms AS r '
+                                        'ON b.room_id = r.id '
+                                        'WHERE b.user_id = %i' % userId)
+        requests = []
+        for row in rows:
+            item = Request(row["id"], row["user_id"], row["name"], row["confirmation"], row["booking_start"])
+            requests.append(item)
+        return requests
+    
+    def getRequestsForUserId(self, userId):
+        rows = self._connection.execute('SELECT b.id, r.user_id, b.room_id, b.confirmation, b.booking_start, r.name '
+                                        'FROM bookings AS b ' 
+                                        'INNER JOIN rooms AS r '
+                                        'ON b.room_id = r.id '
+                                        'WHERE r.user_id = %i' % userId) 
+        requests = []
+        for row in rows:
+            item = Request(row["id"], row["user_id"], row["name"], row["confirmation"], row["booking_start"])
+            requests.append(item)
+        return requests
 
     def create_booking(self, booking):
         id = self._connection.execute(
