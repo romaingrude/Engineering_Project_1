@@ -1,6 +1,6 @@
 from playwright.sync_api import Page, expect
 import pytest
-from signup_app import app
+from app import app
 from lib.database_connection import get_flask_database_connection
 from lib.user_repository import UserRepository
 from lib.user import User
