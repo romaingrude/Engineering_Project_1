@@ -206,6 +206,7 @@ def create_new_room():
 
 
 @app.route("/index", methods=["GET"])
+@app.route("/")
 def get_index():
     return render_template("index.html")
 

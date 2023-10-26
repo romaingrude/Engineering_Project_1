@@ -7,29 +7,35 @@
   <link rel="stylesheet" type="text/css" href="/static/room_show.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
-    .unavailable-date span {
-      background-color: #ccc !important;
-      color: #999 !important;
+    body {
+      background-image: url("/static/background.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
   </style>
 </head>
 
 <body>
   <div class="header">
-    <a href="#default" class="logo">Logo</a>
-    <div class="header-right">
-      <a class="active" href="/rooms">Rooms</a>
+    <a href="" class="logo">
+      <img src="/static/logo.png" alt="MakersBNB Logo">
+    </a>
+    <div class="menu-right">
+      <a href="/rooms">Rooms</a>
       <a href="/bookings">Bookings</a>
       {% if "user_id" in session %}
       <a href="/logout">Sign Out</a>
       {% else %}
       <a href="/login">Log In</a>
+      <a href="/register">Register</a>
       {% endif %}
     </div>
   </div>
+
   <center>
     <h1>{{ room.name }}</h1>
-    <p class="custom-test">
+    <p class="room-details">
       Description: {{ room.description }}<br>
       Price: £{{ room.price }}
     </p>
@@ -42,5 +48,3 @@
     </form>
   </center>
 </body>
-
-</html>
