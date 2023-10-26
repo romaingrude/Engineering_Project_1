@@ -2,21 +2,68 @@
 <html>
 <head>
     <title>Sign Up To MakersBNB</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-
+    <link rel="stylesheet" type="text/css" href="/static/signup.css">
 </head>
 <body>
-    <h1>Feel At Home</h1>
-    <p>Discover the perfect stay with MakersBNB. Sign up now to explore unique accommodations around the world.</p>
-    <h2>Sign Up To MakersBNB</h2>
-    <form method="POST" action="/register">
-        <label for="full name">Full Name:</label>
-        <input type="text" name="name" required><br><br>
+<div class="center-container">
+    <h1 class="center-text">Feel At Home</h1>
+    <p class="center-text">Discover the perfect stay with MakersBNB. Sign up now to explore unique accommodations around the world.</p>
+    <h2 class="center-text">Sign Up To MakersBNB</h2>
+</div>
+    <form method="POST" action="/register" onsubmit="return validatePassword()">
+        <label for="full name">First Name:</label>
+        <input type="text" name="first_name" required><br><br>
+        <label for="full name">Last Name:</label>
+        <input type="text" name="last_name" required><br><br>
         <label for="email">Email:</label>
-        <input type="email" name="email" required><br><br>
+        <input type="email" name="email" id="email" required><br><br>
+        <div id="email-error" style="color: red;">{{ email_error }}</div>
         <label for="password">Password:</label>
-        <input type="password" name="password" required><br><br>
+        <input type="password" name="password" id="password" required><br><br>
+        <div id="password-error" style="color: red;"></div>
         <input type="submit" value="Sign Up">
     </form>
+
+    <script>
+        function validatePassword() {
+            var password = document.getElementById("password").value;
+            var passwordError = document.getElementById("password-error");
+
+            var regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+
+            if (!regex.test(password)) {
+                passwordError.textContent = "Password must have at least 8 characers, 1 number, and 1 special character.";
+                return false;
+            } else {
+                passwordError.textContent = "";
+                return true;
+            }
+        }
+        
+        function validateEmail() {
+            var email = document.getElementById("email").value;
+            var emailError = document.getElementById("email-error");
+    
+            if (emailIsDuplicated(email)) {
+                emailError.style.color = "red";
+                emailError.textContent = "Email is already registered.";
+                return false;
+            } else {
+                emailError.textContent = "";
+                return true;
+            }
+        }
+
+        function validateForm() {
+            return validatePassword() && validateEmail();
+        }
+
+        document.getElementById("password").addEventListener("input", validatePassword);
+        document.getElementById("email").addEventListener("input", validateEmail);
+
+        
+
+    </script>
+
 </body>
 </html>
