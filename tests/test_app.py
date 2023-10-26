@@ -22,7 +22,9 @@ def test_get_rooms(db_connection, page, test_web_address):
 def test_get_single_room(db_connection, page, test_web_address):
     db_connection.seed("seeds/MakersBNB_seed.sql")
     page.goto(f"http://{test_web_address}/rooms/1")
-    p_tag = page.locator("p")
+    p_tag = page.locator(
+        ".custom-test"
+    )  # Update the locator to target the specific p tag with the custom class
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Room 1")
     expect(p_tag).to_have_text(["""Description: This is a room\nPrice: £100.0"""])
@@ -110,4 +112,4 @@ class TestLogin:
         page.click("text=Log in")
 
         h1_tag = page.locator("h1")
-        expect(h1_tag).to_have_text("Login Successful")
+        expect(h1_tag).to_have_text("Book a Space")

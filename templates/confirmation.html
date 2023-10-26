@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book a Space</title>
+    <link rel="stylesheet" type="text/css" href="/static/room_show.css">
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h2>Booking Confirmed</h3>
+
+        <h4>Start Date is: {{ session['startdate']|format_date }}</h4>
+        <h4>End Date is: {{ session['enddate']|format_date }}</h4>
+
+</body>
+
+</html>

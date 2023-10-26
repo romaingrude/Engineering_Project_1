@@ -11,6 +11,10 @@ pytest-playwright = "*"
 pytest-xprocess = "*"
 py = "*"
 pytest-cov = "*"
+flask-scheduler = "*"
+psycopg2 = "*"
+flask-wtf = "*"
+wtforms = "*"
 
 [dev-packages]
 autopep8 = "*"

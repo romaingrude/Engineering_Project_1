@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Book a Space - {{ room.name }}</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/static/room_show.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    .unavailable-date span {
+      background-color: #ccc !important;
+      color: #999 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <a href="#default" class="logo">Logo</a>
+    <div class="header-right">
+      <a class="active" href="/rooms">Rooms</a>
+      <a href="/bookings">Bookings</a>
+      <a href="/logout">Sign Out</a>
+    </div>
+  </div>
+  <center>
+    <h1>{{ room.name }}</h1>
+    <p class="custom-test">
+      Price: £{{ room.price }}
+    </p>
+    <br><br>
+    <form action="{{ url_for('booking') }}" method="POST">
+      {{ form.csrf_token }}
+      <label for="startdate">Start Date:</label>
+      <input type="text" id="startdate" name="startdate" placeholder="Select a date" data-input>
+      <br><br>
+      <label for="enddate">End Date:</label>
+      <input type="text" id="enddate" name="enddate" placeholder="Select a date" data-input>
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.submit() }}
+      </p>
+      <input type="button" value="Back" class="back-button" onclick="history.back()">
+      {% if error_message %}
+      <p class="error-message">{{ error_message }}</p>
+      {% endif %}
+    </form>
+  </center>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Select the error message element
+      var errorMessage = document.querySelector(".error-message");
+
+      // Check if the error message element exists
+      if (errorMessage) {
+        // Set a timeout to hide the error message after 2 seconds
+        setTimeout(function () {
+          errorMessage.style.display = "none"; // Hide the error message
+        }, 3000); // 2000 milliseconds (2 seconds)
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      var counter = 0;
+      var minDate = "{{ min_date }}"; // Use the min_date you passed from Python
+      var today = new Date(); // Get today's date
+
+      var bookedDates = {{ booked_dates | tojson | safe
+    }}; // Convert to JSON and mark as safe
+
+    var startDateInput = flatpickr("#startdate", {
+      minDate: today, // Set the minDate to today
+      disable: Object.values(bookedDates).map(function (dateRange) {
+        return {
+          from: dateRange.start,
+          to: dateRange.end
+        };
+      }),
+      dateFormat: "Y-m-d",
+      onClose: function (selectedDates) {
+        endDateInput.set("minDate", selectedDates[0]);
+      }
+    });
+
+    var endDateInput = flatpickr("#enddate", {
+      minDate: today, // Set the minDate to today
+      disable: [
+        {
+          from: minDate,
+          to: today
+        },
+        ...Object.values(bookedDates).map(function (dateRange) {
+          return {
+            from: dateRange.start,
+            to: dateRange.end
+          };
+        })
+      ],
+      dateFormat: "Y-m-d",
+      onClose: function (selectedDates) {
+        startDateInput.set("maxDate", selectedDates[0]);
+      }
+    });
+  });
+  </script>
+</body>
+
+</html>

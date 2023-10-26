@@ -1,0 +1,138 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f2f2f2;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+  margin-left: 80%;
+  margin-bottom: auto;
+}
+
+.header .logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.header .header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header .header-right a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 0;
+  font-family: "Arial", sans-serif; /* Change the font family to your desired font */
+}
+
+form {
+  width: 300px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 55%;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="button"],
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Add this line to include padding and border in the width calculation */
+}
+
+
+input[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+}
+input[type="submit"]:hover{
+  background-color: #2c872f;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* input[type="button"] {
+  background-color: #ec433d;
+  color: #fff;
+  border: none;
+}
+input[type="button"]:hover{
+  background-color: #e22822;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+} */
+
+/* Style for the "Request Booking" button */
+.request-button {
+  background-color: #f8a312; /* Change to your desired color */
+  color: #fff;
+}
+
+.request-button:hover {
+  background-color: #be7e11; /* Change to your desired hover color */
+}
+
+/* Style for the "Back" button */
+.back-button {
+  background-color: #ec433d; /* Change to your desired color */
+  color: #fff;
+}
+
+.back-button:hover {
+  background-color: #e22822; /* Change to your desired hover color */
+  color: #fff;
+}
+
+
+
+.error-message {
+  text-align: center;
+  color: red;
+  padding: 10px; /* Add padding for better visibility */
+  background-color: #f44336; /* Background color for the error message */
+  color: #fff; /* Text color for the error message */
+  position: absolute; /* Position the error message absolutely */
+  left: 50%; /* Position it at the horizontal center of the viewport */
+  top: 74%; /* Position it at the top of the viewport */
+  transform: translateX(-50%); /* Center it horizontally */
+  z-index: 1; /* Ensure it's above other elements */
+  border: 1px solid #fff; /* Add a border */
+  border-radius: 4px; /* Add border radius for a rounded appearance */
+}
+
+.unavailable-date span {
+  background-color: #ccc !important;
+  color: #999 !important;
+}
