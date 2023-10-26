@@ -6,14 +6,18 @@ from lib.user import User
 We can render the index page
 """
 
+
 def test_get_rooms(db_connection, page, test_web_address):
     db_connection.seed("seeds/MakersBNB_seed.sql")
     page.goto(f"http://{test_web_address}/rooms")
     p_tags = page.locator("p")
-    expect(p_tags).to_have_text([
-        "Name: Room 1\nDescription: This is a room\nPrice: £100.0",
-        "Name: Room 2\nDescription: This is another room\nPrice: £200.0"
-    ])
+    expect(p_tags).to_have_text(
+        [
+            "Name: Room 1\nDescription: This is a room\nPrice: £100.0",
+            "Name: Room 2\nDescription: This is another room\nPrice: £200.0",
+        ]
+    )
+
 
 def test_get_single_room(db_connection, page, test_web_address):
     db_connection.seed("seeds/MakersBNB_seed.sql")
@@ -23,24 +27,29 @@ def test_get_single_room(db_connection, page, test_web_address):
     expect(h1_tag).to_have_text("Room 1")
     expect(p_tag).to_have_text(["""Description: This is a room\nPrice: £100.0"""])
 
-# def test_create_room(db_connection, page, test_web_address):
-#     db_connection.seed("seeds/MakersBNB_seed.sql")
-#     page.goto(f"http://{test_web_address}/rooms")
 
-#     # Click the button with a valid CSS selector
-#     page.click('button:has-text("List a Space")')
+def test_create_room(db_connection, page, test_web_address):
+    db_connection.seed("seeds/MakersBNB_seed.sql")
+    page.goto(f"http://{test_web_address}/rooms")
 
-#     page.fill('input[name=name]', "Room 3")
-#     page.fill('input[name=description]', "This is the third room.")
-#     page.fill('input[name=price]', "300")
-#     page.fill('input[name=start_date]', "2021-12-12")
-#     page.fill('input[name=end_date]', "2021-12-17")
+    page.set_default_timeout(1000)
+    # Click the button with a valid CSS selector
+    page.click('button:has-text("List a Space")')
 
-#     # Click the button with a valid CSS selector
-#     page.click('button:has-text("List my Space")')
+    h1new_tag = page.locator("h1")
+    expect(h1new_tag).to_have_text("List a Space")
 
-#     h1_tag = page.locator("h1")
-#     expect(h1_tag).to_have_text("Room 3")
+    page.fill("input[name=name]", "Room 3")
+    page.fill("input[name=description]", "This is the third room.")
+    page.fill("input[name=price]", "300")
+    page.fill("input[name=start_date]", "2021-12-12")
+    page.fill("input[name=end_date]", "2021-12-17")
+
+    # Click the button with a valid CSS selector
+    page.click("text=List my Space")
+
+    h1rooms_tag = page.locator("h1")
+    expect(h1rooms_tag).to_have_text("Book a Space")
 
 
 def test_get_index(page, test_web_address):

@@ -15,6 +15,7 @@ secret_key = secrets.token_hex(16)
 # Set the secret key for the Flask app
 app.secret_key = secret_key
 
+
 @app.route("/rooms", methods=["GET"])
 def get_rooms():
     connection = get_flask_database_connection(app)
@@ -22,7 +23,8 @@ def get_rooms():
     rooms = repo.all()
     return render_template("rooms/room_index.html", rooms=rooms)
 
-@app.route('/rooms/<id>', methods = ['GET'])
+
+@app.route("/rooms/<id>", methods=["GET"])
 def get_single_room(id):
     connection = get_flask_database_connection(app)
     room_repo = RoomsRepository(connection)
@@ -30,23 +32,26 @@ def get_single_room(id):
 
     return render_template("rooms/room_show.html", room=room)
 
-@app.route('/rooms/room_new')
-def get_new_room():
-    return render_template('rooms/room_new.html')
 
-@app.route('/rooms', methods = ["POST"])
+@app.route("/rooms/room_new")
+def get_new_room():
+    return render_template("rooms/room_new.html")
+
+
+@app.route("/rooms", methods=["POST"])
 def create_new_room():
     connection = get_flask_database_connection(app)
     repo = RoomsRepository(connection)
 
-    name = request.form['name']
-    price = int(request.form['price'])
-    description = request.form['description']
+    name = request.form["name"]
+    price = int(request.form["price"])
+    description = request.form["description"]
 
-    room = Rooms(None, name, price, description, 1) 
+    room = Rooms(None, name, price, description, 1)
 
     repo.create(room)
     return redirect(f"/rooms")
+
 
 @app.route("/index", methods=["GET"])
 def get_index():
@@ -95,25 +100,9 @@ def temp_account():
         # The user is logged in, display their account page.
         return render_template("temp.html")
 
-@app.route("/rooms", methods=["GET"])
-def get_rooms():
-    connection = get_flask_database_connection(app)
-    repo = RoomsRepository(connection)
-    rooms = repo.all()
-    return render_template("rooms/room_index.html", rooms=rooms)
-
-@app.route('/rooms/<id>', methods = ['GET'])
-def get_single_room(id):
-    connection = get_flask_database_connection(app)
-    room_repo = RoomsRepository(connection)
-    room = room_repo.find(id)
-
-    return render_template("rooms/room_show.html", room=room)
-
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
 if __name__ == "__main__":
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
-
