@@ -120,7 +120,16 @@ input[type="button"]:hover{
 .error-message {
   text-align: center;
   color: red;
-  margin-bottom: 20px;
+  padding: 10px; /* Add padding for better visibility */
+  background-color: #f44336; /* Background color for the error message */
+  color: #fff; /* Text color for the error message */
+  position: absolute; /* Position the error message absolutely */
+  left: 50%; /* Position it at the horizontal center of the viewport */
+  top: 74%; /* Position it at the top of the viewport */
+  transform: translateX(-50%); /* Center it horizontally */
+  z-index: 1; /* Ensure it's above other elements */
+  border: 1px solid #fff; /* Add a border */
+  border-radius: 4px; /* Add border radius for a rounded appearance */
 }
 
 .unavailable-date span {

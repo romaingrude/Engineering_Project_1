@@ -20,7 +20,11 @@
     <div class="header-right">
       <a class="active" href="/rooms">Rooms</a>
       <a href="/bookings">Bookings</a>
+      {% if "user_id" in session %}
       <a href="/logout">Sign Out</a>
+      {% else %}
+      <a href="/login">Log In</a>
+      {% endif %}
     </div>
   </div>
   <center>

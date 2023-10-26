@@ -41,11 +41,26 @@
         {{ form.submit() }}
       </p>
       <input type="button" value="Back" class="back-button" onclick="history.back()">
+      {% if error_message %}
+      <p class="error-message">{{ error_message }}</p>
+      {% endif %}
     </form>
   </center>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Select the error message element
+      var errorMessage = document.querySelector(".error-message");
+
+      // Check if the error message element exists
+      if (errorMessage) {
+        // Set a timeout to hide the error message after 2 seconds
+        setTimeout(function () {
+          errorMessage.style.display = "none"; // Hide the error message
+        }, 2000); // 2000 milliseconds (2 seconds)
+      }
+    });
     document.addEventListener("DOMContentLoaded", function () {
       var counter = 0;
       var minDate = "{{ min_date }}"; // Use the min_date you passed from Python

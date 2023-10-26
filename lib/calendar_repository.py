@@ -22,3 +22,11 @@ class CalendarRepository:
             end_date = row["booking_end"]
             booked_dates.append([start_date, end_date])
         return booked_dates
+
+    def is_date_booked(self, room_id, date):
+        result = self._connection.execute(
+            "SELECT COUNT(*) FROM bookings WHERE room_id = %s AND booking_start <= %s AND booking_end >= %s",
+            [room_id, date, date],
+        )
+        row = result[0]
+        return row["count"] > 0

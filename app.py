@@ -17,7 +17,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import DateField
 from wtforms.validators import DataRequired
 from wtforms import validators, SubmitField
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from lib.calendar_repository import CalendarRepository
 
 # Create a new Flask app
@@ -53,37 +53,50 @@ app.jinja_env.filters["format_date"] = format_date
 
 @app.route("/rooms/<id>/booking_request/", methods=["GET"])
 def booking_request(id):
-    connection = get_flask_database_connection(app)
-    room_repo = RoomsRepository(connection)
-    room = room_repo.find(id)
+    if "user_id" not in session:
+        # Store the current URL in the session
+        session["redirect_url"] = request.url
+        return render_template("login.html")
+    else:
+        connection = get_flask_database_connection(app)
+        room_repo = RoomsRepository(connection)
+        room = room_repo.find(id)
 
-    # Calculate the minimum date (today)
-    min_date = date.today().isoformat()
+        # Calculate the minimum date (today)
+        min_date = date.today().isoformat()
 
-    # Fetch the booked dates for this room using CalendarRepository
-    calendar_repo = CalendarRepository(connection)
-    booked_dates_list = calendar_repo.get_booked_dates_for_room(room.id)
+        # Fetch the booked dates for this room using CalendarRepository
+        calendar_repo = CalendarRepository(connection)
+        booked_dates_list = calendar_repo.get_booked_dates_for_room(room.id)
 
-    # Format the dates as YYYY-MM-DD
-    formatted_booked_dates = [
-        [start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d")]
-        for start_date, end_date in booked_dates_list
-    ]
+        # Format the dates as YYYY-MM-DD
+        formatted_booked_dates = [
+            [start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d")]
+            for start_date, end_date in booked_dates_list
+        ]
 
-    # Create the booked_dates_dic dictionary
-    booked_dates_dic = {}
-    for i, date_range in enumerate(formatted_booked_dates, start=1):
-        start_date, end_date = date_range
-        booked_dates_dic[i] = {"start": start_date, "end": end_date}
+        # Create the booked_dates_dic dictionary
+        booked_dates_dic = {}
+        for i, date_range in enumerate(formatted_booked_dates, start=1):
+            start_date, end_date = date_range
+            booked_dates_dic[i] = {"start": start_date, "end": end_date}
 
-    form = InfoForm()  # Instantiate the form
-    return render_template(
-        "rooms/room_book.html",
-        room=room,
-        min_date=min_date,
-        booked_dates=booked_dates_dic,
-        form=form,
-    )
+        form = InfoForm()  # Instantiate the form
+
+        # In the booking_request route
+        error_message = session.pop(
+            "error_message", None
+        )  # Retrieve and remove the error message from the session
+
+        # Pass the error_message to the template
+        return render_template(
+            "rooms/room_book.html",
+            room=room,
+            min_date=min_date,
+            booked_dates=booked_dates_dic,
+            form=form,
+            error_message=error_message,
+        )
 
 
 @app.route("/booking", methods=["POST"])
@@ -104,6 +117,20 @@ def booking():
             # Add the booking to the database
             connection = get_flask_database_connection(app)
             calendar_repo = CalendarRepository(connection)
+
+            # Check if any dates in the selected range are already booked
+            current_date = start_date
+            while current_date <= end_date:
+                if calendar_repo.is_date_booked(room_id, current_date):
+                    error_message = "Dates already booked."
+                    session[
+                        "error_message"
+                    ] = error_message  # Store the error message in the session
+                    return redirect(url_for("booking_request", id=room_id))
+
+                current_date += timedelta(days=1)
+
+            # All dates in the range are available, add the booking to the database
             calendar_repo.add_booked_date(user_id, room_id, False, start_date, end_date)
             session["booking_complete"] = True
             flash("Booking was successful!", "success")
@@ -113,14 +140,6 @@ def booking():
             # Handle the case where the user is not logged in
             # You can display an error message or redirect to the login page
             return redirect(url_for("login"))
-
-
-# Rest of your code...
-
-
-# @app.route("/index", methods=["GET"])
-# def get_index():
-#     return render_template("index.html")
 
 
 @app.route("/login")
@@ -146,14 +165,25 @@ def login_post():
     if not errors:
         if user_repo.check_password(email, password):
             user = user_repo.find_by_email(email)
-            # Set the user ID in session
             session["user_id"] = user.id
 
-            return redirect(url_for("temp_account"))
+            # Check if a redirect URL is stored in the session
+            redirect_url = session.pop("redirect_url", None)
+            if redirect_url:
+                return redirect(redirect_url)
+            else:
+                return redirect(url_for("get_rooms"))
         else:
             errors.append("Invalid login details.")
 
     return render_template("login.html", error_message=" ".join(errors))
+
+
+@app.route("/logout")
+def logout():
+    # Clear the user's session
+    session.clear()
+    return redirect(url_for("login"))
 
 
 @app.route("/temp")
@@ -174,9 +204,6 @@ def get_rooms():
     return render_template("rooms/room_index.html", rooms=rooms)
 
 
-from datetime import date, timedelta
-
-
 @app.route("/rooms/<id>", methods=["GET"])
 def get_single_room(id):
     connection = get_flask_database_connection(app)
@@ -185,10 +212,21 @@ def get_single_room(id):
 
     session["room_id"] = room.id
 
+    booking_request_url = url_for("booking_request", id=id)
+
     return render_template(
         "rooms/room_show.html",
         room=room,
+        booking_request_url=booking_request_url,  # Pass the URL to the template
     )
+
+
+# Rest of your code...
+
+
+# @app.route("/index", methods=["GET"])
+# def get_index():
+#     return render_template("index.html")
 
 
 # These lines start the server if you run this file directly
