@@ -82,7 +82,7 @@ input[type="submit"]:hover{
   cursor: pointer;
 }
 
-input[type="button"] {
+/* input[type="button"] {
   background-color: #ec433d;
   color: #fff;
   border: none;
@@ -92,6 +92,27 @@ input[type="button"]:hover{
   color: #fff;
   border: none;
   cursor: pointer;
+} */
+
+/* Style for the "Request Booking" button */
+.request-button {
+  background-color: #f8a312; /* Change to your desired color */
+  color: #fff;
+}
+
+.request-button:hover {
+  background-color: #be7e11; /* Change to your desired hover color */
+}
+
+/* Style for the "Back" button */
+.back-button {
+  background-color: #ec433d; /* Change to your desired color */
+  color: #fff;
+}
+
+.back-button:hover {
+  background-color: #e22822; /* Change to your desired hover color */
+  color: #fff;
 }
 
 

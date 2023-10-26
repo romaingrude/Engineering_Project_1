@@ -1,12 +1,11 @@
 <html>
 
 <head>
-  <title>MakersBNB - Book a Space </title>
+  <title>MakersBNB - Book a Space</title>
   <meta charset="utf-8">
 </head>
 
 <body>
-
   <div class="header">
     <a href="" class="logo">Logo</a>
     <div class="header-right">
@@ -22,14 +21,21 @@
         <button type="submit">List a Space</button>
       </form>
     </center>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <script>
+      // Show the popup alert
+      alert("Booking successful!");
+    </script>
+    {% endif %}
+    {% endwith %}
+
     {% for room in rooms %}
     <p>
-      Name: <a href="/rooms/{{room.id}}">
-        {{room.name}}
-      </a><br>
-      Description: {{room.description}}
-      <br>
-      Price: £{{room.price}}
+      Name: <a href="/rooms/{{ room.id }}">{{ room.name }}</a><br>
+      Description: {{ room.description }}<br>
+      Price: £{{ room.price }}
     </p><br>
     {% endfor %}
 </body>
