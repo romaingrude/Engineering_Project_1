@@ -27,8 +27,32 @@ from lib.rooms import Rooms
 
 app = Flask(__name__)
 
+# Generate a secret key
+secret_key = secrets.token_hex(16)
 
-#   ; open http://localhost:5000/index
+# Set the secret key for the Flask app
+app.secret_key = secret_key
+
+
+class InfoForm(FlaskForm):
+    startdate = DateField(
+        "Start Date", format="%Y-%m-%d", validators=(validators.DataRequired(),)
+    )
+    enddate = DateField(
+        "End Date", format="%Y-%m-%d", validators=(validators.DataRequired(),)
+    )
+    submit = SubmitField("Submit")
+
+
+# Custom filter to format the date
+def format_date(date):
+    if isinstance(date, str):
+        date = datetime.strptime(date, "%a, %d %b %Y %H:%M:%S %Z")
+    return date.strftime("%Y-%m-%d")
+
+
+# Add the custom filter to the Jinja2 environment
+app.jinja_env.filters["format_date"] = format_date
 
 
 @app.route("/register")
@@ -65,35 +89,7 @@ def register():
     new_user = User(id=None, name=full_name, email=email, password=password)
     user_repo.create(new_user)
 
-    return redirect(url_for("get_index"))
-
-
-# Generate a secret key
-secret_key = secrets.token_hex(16)
-
-# Set the secret key for the Flask app
-app.secret_key = secret_key
-
-
-class InfoForm(FlaskForm):
-    startdate = DateField(
-        "Start Date", format="%Y-%m-%d", validators=(validators.DataRequired(),)
-    )
-    enddate = DateField(
-        "End Date", format="%Y-%m-%d", validators=(validators.DataRequired(),)
-    )
-    submit = SubmitField("Submit")
-
-
-# Custom filter to format the date
-def format_date(date):
-    if isinstance(date, str):
-        date = datetime.strptime(date, "%a, %d %b %Y %H:%M:%S %Z")
-    return date.strftime("%Y-%m-%d")
-
-
-# Add the custom filter to the Jinja2 environment
-app.jinja_env.filters["format_date"] = format_date
+    return redirect(url_for("login"))
 
 
 @app.route("/rooms/<id>/booking_request/", methods=["GET"])
@@ -209,7 +205,7 @@ def create_new_room():
 @app.route("/index", methods=["GET"])
 @app.route("/")
 def get_index():
-    return render_template("index.html")
+    return redirect(url_for("get_rooms"))
 
 
 @app.route("/requests")
@@ -336,7 +332,7 @@ def get_room_name_and_description_and_other_requests(booking_id):
         bookings=bookings,
         number_of_bookings=number_of_bookings,
         booking_id=booking_id,
-        length_of_bookings=length_of_bookings
+        length_of_bookings=length_of_bookings,
     )
 
 

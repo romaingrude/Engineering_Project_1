@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 
 <head>
-    <link rel="stylesheet" href="../static/allBookings.css">
-    <title>
-        Requests | MakersBnB</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="MakersBnB user's booking requests.">
+    <title>All Bookings</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/room_show.css">
+
 </head>
 
-<div id="header_div">
-    <div id="logo">
-        <a href="..\pages\home.html"><img id="logo_img" src="..\media\logoimage.png"></img></a>
+<body>
+    <div class="header">
+        <a href="/rooms" class="logo">
+            <img src="/static/logo.png" alt="MakersBNB Logo">
+        </a>
+        <div class="menu-right">
+            <a href="/rooms">Rooms</a>
+            <a href="/requests">Bookings</a>
+            {% if "user_id" in session %}
+            <a href="/logout">Sign Out</a>
+            {% else %}
+            <a href="/login">Log In</a>
+            <a href="/register">Register</a>
+            {% endif %}
+        </div>
     </div>
 
     <ul id="menulinks_div">
@@ -21,40 +31,36 @@
         <li id="menuitem"><a href="/signout">Sign out</a></li>
     </ul>
 
-    <body>
-        <div id="title_div">Requests</div>
-        <div id="topflavour_div">All requests made by and for the user {{username}}.</div>
-
-        <div class="parent">
-            <div class="child">
-                <ul id="requestedBookings_div">
-                    {% for booking in requestedBookings %}
-                    <li>
-                        <ul>
-                            <li>{{booking.name}}</li>
-                            <li>{% if booking.confirmation==True %}Confirmed{% else %}Not confirmed{% endif %}</li>
-                            <li>{{booking.booking_start}}</li>
-                        </ul>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-
-            <div class="child">
-                <ul id="bookingRequests_div">
-                    {% for booking in bookingRequests %}
-                    <li>
-                        <ul>
-                            <li>{{booking.name}}</li>
-                            <li>{% if booking.confirmation==True %}Confirmed{% else %}Not confirmed{% endif %}</li>
-                            <li>{{booking.booking_start}}</li>
-                        </ul>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+    <div class="parent">
+        <div class="child">
+            <ul id="requestedBookings_div">
+                {% for booking in requestedBookings %}
+                <li>
+                    <ul>
+                        <li>{{booking.name}}</li>
+                        <li>{% if booking.confirmation==True %}Confirmed{% else %}Not confirmed{% endif %}</li>
+                        <li>{{booking.booking_start}}</li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
 
-    </body>
+        <div class="child">
+            <ul id="bookingRequests_div">
+                {% for booking in bookingRequests %}
+                <li>
+                    <ul>
+                        <li>{{booking.name}}</li>
+                        <li>{% if booking.confirmation==True %}Confirmed{% else %}Not confirmed{% endif %}</li>
+                        <li>{{booking.booking_start}}</li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</body>
 
 </html>
