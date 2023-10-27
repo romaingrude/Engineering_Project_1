@@ -12,6 +12,7 @@ from flask import (
 from lib.database_connection import get_flask_database_connection
 from lib.user_repository import UserRepository
 from lib.rooms_repository import RoomsRepository
+from lib.booking_repository import BookingRepository
 import secrets
 from flask_wtf import FlaskForm
 from wtforms.fields import DateField
@@ -210,7 +211,7 @@ def create_new_room():
 def get_index():
     return render_template("index.html")
 
-
+# LOGIN
 @app.route("/login")
 def login():
     if "user_id" not in session:
@@ -267,7 +268,7 @@ def temp_account():
         # The user is logged in, display their account page.
         return render_template("temp.html")
 
-
+# ROOMS
 @app.route("/rooms", methods=["GET"])
 def get_rooms():
     connection = get_flask_database_connection(app)
@@ -292,6 +293,33 @@ def get_single_room(id):
         booking_request_url=booking_request_url,  # Pass the URL to the template
     )
 
+
+# BOOKINGS
+@app.route("/bookings/<booking_id>", methods=["GET"])
+def get_room_name_and_description_and_other_requests(booking_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    booking = booking_repository.find_with_room(booking_id)
+    user = booking_repository.find_with_user(booking_id)
+    bookings = booking_repository.find_all_bookings_for_this_room(booking_id)
+    number_of_bookings = booking_repository.count_bookings_for_this_user(booking_id)
+    return render_template("bookings/show.html", booking=booking, user=user, bookings=bookings, number_of_bookings=number_of_bookings, booking_id=booking_id)
+
+@app.route("/bookings/<booking_id>/confirm", methods=["POST"])
+def post_confirm_booking(booking_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    booking_repository.confirm_booking(booking_id)
+    booking = booking_repository.find_with_room(booking_id)[0]
+    return redirect(url_for("get_room_name_and_description_and_other_requests", booking_id=booking.id ))
+
+@app.route("/bookings/<booking_id>/deny", methods=["POST"])
+def delete_deny_booking(booking_id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    booking_repository.deny_booking(booking_id)
+    # return render_template("rooms/room_index.html", rooms=rooms)
+    return redirect(url_for("get_rooms", booking_id=booking_id))
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
