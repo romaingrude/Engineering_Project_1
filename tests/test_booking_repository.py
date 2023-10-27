@@ -67,7 +67,7 @@ def test_deny_a_booking(db_connection):
     booking_1 = Booking(1, 1, 1, True, datetime.date(2021, 1, 1), datetime.date(2021, 1, 2))
 
     assert bookings == [
-        booking_1,
+        booking_1
     ]
 
 def test_confirm_booking(db_connection):

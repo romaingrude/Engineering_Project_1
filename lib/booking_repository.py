@@ -43,11 +43,23 @@ class BookingRepository:
             if item.room_id == room.id:
                 bookings.append((item, room))
         return bookings
+    
+    def count_bookings_for_this_user(self, booking_id):
+        rows = self._connection.execute(
+            "SELECT bookings.id, bookings.confirmation, bookings.booking_start, bookings.booking_end, users.id AS user_id, users.name, users.email, users.password FROM bookings JOIN users ON users.id = bookings.user_id WHERE bookings.id = %s", [booking_id])
+        bookings = []
+        for row in rows:
+            item = Booking(row["id"], row["user_id"], None, row["confirmation"], row["booking_start"], row["booking_end"])
+            user = User(row["id"], row["name"], row["email"], row["password"])
+            if item.user_id == user.id:
+                bookings.append(item)
+        return len(bookings)
 
     def confirm_booking(self, booking_id): #--> meaning accept request
         rows = self._connection.execute(
             'UPDATE bookings SET confirmation = True WHERE id = %s', [booking_id]
         )
+        return None
 
     def deny_booking(self, booking_id): #--> meaning delete request
         rows = self._connection.execute(

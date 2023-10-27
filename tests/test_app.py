@@ -33,14 +33,15 @@ def test_get_index(page, test_web_address):
     # We assert that it has the text "This is the homepage."
     expect(strong_tag).to_have_text("This is the homepage.")
 
+# Bookings
 def test_get_room_name_and_description(db_connection, page, test_web_address):
     db_connection.seed("seeds/MakersBNB_seed.sql")
     page.goto(f"http://{test_web_address}/bookings/1")
-    page.click("text=Request for Room 1")
+    page.click("text=Request for 'Room 1'")
     page.click("text=This is a room")
     title_element = page.locator(".title")
     description_element = page.locator(".description")
-    expect(title_element).to_have_text("Request for Room 1")
+    expect(title_element).to_have_text("Request for 'Room 1'")
     expect(description_element).to_have_text("This is a room")
 
 def test_get_all_confirmed_bookings_for_the_room(db_connection, page, test_web_address):
@@ -57,20 +58,34 @@ def test_get_all_not_confirmed_bookings_for_the_room(db_connection, page, test_w
     confirmation_element = page.locator(".confirmation")
     expect(confirmation_element).to_have_text("Not confirmed")
 
-def test_get_user_details_and_date(db_connection, page, test_web_address):
+def test_get_user_details(db_connection, page, test_web_address):
     db_connection.seed("seeds/MakersBNB_seed.sql")
     page.goto(f"http://{test_web_address}/bookings/1")
-    page.click("text=test@gmail.com")
+    page.click("text=From: test@gmail.com")
     email_element = page.locator(".user_email")
-    expect(email_element).to_have_text("test@gmail.com")
+    expect(email_element).to_have_text("From: test@gmail.com")
     
-    page.click("text=2021-01-01")
+def test_get_booking_date(db_connection, page, test_web_address):
+    db_connection.seed("seeds/MakersBNB_seed.sql")
+    page.goto(f"http://{test_web_address}/bookings/1")
+    page.click("text=Date: 2021-01-01")
     date_element = page.locator(".booking_date")
-    expect(date_element).to_have_text("2021-01-01")
+    expect(date_element).to_have_text("Date: 2021-01-01")
     
-    page.click("text=1")
+def test_get_number_of_bookings(db_connection, page, test_web_address):
+    db_connection.seed("seeds/MakersBNB_seed.sql")
+    page.goto(f"http://{test_web_address}/bookings/1")
+    page.click("text=No. of Spaces booked: 1")
     spaces_booked_element = page.locator(".spaces_booked")
-    expect(spaces_booked_element).to_have_text("1")
+    expect(spaces_booked_element).to_have_text("No. of Spaces booked: 1")
+
+def test_post_confirm_booking(db_connection, web_client):
+    db_connection.seed("seeds/MakersBNB_seed.sql")
+    response = web_client.post("/bookings", data={'id': 2, 'user_id': 2, 'confirmation': 'False', 'booking_start': '2021-01-01', 'booking_end': '2021-01-02'})
+    assert response.status_code == 200
+
+# Booking(row["id"], row["user_id"], None, row["confirmation"], row["booking_start"], row["booking_end"])
+# (2, 2, False, '2021-01-01', '2021-01-02')
 
 class TestLogin:
 

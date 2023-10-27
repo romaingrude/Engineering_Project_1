@@ -11,7 +11,7 @@
 
     <h3 class="user_email">From: {{ user.email }}</h3>
     <h3 class="booking_date">Date: {{ booking[0].booking_start }}</h3>
-    
+    <h3 class="spaces_booked">No. of Spaces booked: {{ number_of_bookings }}</h3>
 
     <h5>Other Requests for this Space</h5>
         <div class="booking-card">
@@ -27,5 +27,13 @@
                 {% endif %}
             {% endfor %}
         </div>
+
+    <form action="/bookings/{{booking_id}}/confirm" method="POST">
+        <input type="submit" value="Confirm Request">
+    </form>
+    
+    <form action="/bookings/{{booking_id}}/deny" method="POST">
+        <input type="submit" value="Deny Request">
+    </form>
 </body>
 </html>
