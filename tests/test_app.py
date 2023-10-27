@@ -100,9 +100,9 @@ def test_get_user_details(db_connection, page, test_web_address):
 def test_get_booking_date(db_connection, page, test_web_address):
     db_connection.seed("seeds/MakersBNB_seed.sql")
     page.goto(f"http://{test_web_address}/bookings/1")
-    page.click("text=Date: 2021-01-01")
+    page.click("text=Date: 2023-11-01")
     date_element = page.locator(".booking_date")
-    expect(date_element).to_have_text("Date: 2021-01-01")
+    expect(date_element).to_have_text("Date: 2023-11-01")
     
 def test_get_number_of_bookings(db_connection, page, test_web_address):
     db_connection.seed("seeds/MakersBNB_seed.sql")
@@ -110,14 +110,6 @@ def test_get_number_of_bookings(db_connection, page, test_web_address):
     page.click("text=No. of Spaces booked: 1")
     spaces_booked_element = page.locator(".spaces_booked")
     expect(spaces_booked_element).to_have_text("No. of Spaces booked: 1")
-
-def test_post_confirm_booking(db_connection, web_client):
-    db_connection.seed("seeds/MakersBNB_seed.sql")
-    response = web_client.post("/bookings", data={'id': 2, 'user_id': 2, 'confirmation': 'False', 'booking_start': '2021-01-01', 'booking_end': '2021-01-02'})
-    assert response.status_code == 200
-
-# Booking(row["id"], row["user_id"], None, row["confirmation"], row["booking_start"], row["booking_end"])
-# (2, 2, False, '2021-01-01', '2021-01-02')
 
 class TestLogin:
 

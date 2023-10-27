@@ -47,7 +47,7 @@ def test_find_with_room(db_connection):
     db_connection.seed("seeds/MakersBNB_seed.sql")
     booking_respository = BookingRepository(db_connection)
     booking = booking_respository.find_with_room(1)
-    assert booking == (Booking(1, 1, 1, True, datetime.date(2021, 1, 1), datetime.date(2021, 1, 2)), Rooms(1, 'Room 1', 100, 'This is a room', 1))
+    assert booking == (Booking(1, 1, 1, True, datetime.date(2023, 11, 1), datetime.date(2023, 11, 10)), Rooms(1, 'Room 1', 100, 'This is a room', 1))
 
 def test_find_with_user(db_connection):
     db_connection.seed("seeds/MakersBNB_seed.sql")
@@ -60,7 +60,7 @@ def test_find_all_bookings_for_this_room(db_connection):
     booking_respository = BookingRepository(db_connection)
 
     bookings = booking_respository.find_all_bookings_for_this_room(1)
-    booking_1 = (Booking(1, 1, 1, True, datetime.date(2021, 1, 1), datetime.date(2021, 1, 2)), Rooms(1, 'Room 1', 100, 'This is a room', 1))
+    booking_1 = (Booking(1, 1, 1, True, datetime.date(2023, 11, 1), datetime.date(2023, 11, 10)), Rooms(1, 'Room 1', 100, 'This is a room', 1))
 
     assert bookings == [
         booking_1
