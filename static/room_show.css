@@ -17,7 +17,7 @@
   text-align: right;
   font-family: "Arial", sans-serif;
   font-size: x-large;
-  margin-top: -10px; /* Add this line to move the menu links up */
+  margin-top: -10px;
 }
 
 .menu-right a {
@@ -25,18 +25,20 @@
   margin-left: 10px;
   text-decoration: none;
   color: #ede9e9;
-  padding: 5px 8px; /* Add padding to create more visual separation */
+  padding: 5px 8px;
 }
 
 .menu-right a:hover {
   color: #8e8e8e;
-  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4); /* Add this line to add a text shadow effect on hover */
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
 }
 
 h1 {
   text-align: center;
-  font-family: "Arial", sans-serif; /* Change the font family to your desired font */
-  color: #ede9e9;
+  margin-top: 50px;
+  font-family: "Arial", sans-serif;
+  color: #ffffff;
+  text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
 }
 
 .room-details {
@@ -47,23 +49,30 @@ h1 {
   color: #000000;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
-  display: inline-block; /* Make the box wrap around the text */
+  background-color: rgba(255, 255, 255, 0.7);
+  display: inline-block;
 }
-
 
 .room-details p {
-  margin-bottom: 0; /* Remove the default bottom margin of the paragraph */
+  margin-bottom: 0;
 }
-
 
 form {
   width: 300px;
-  padding: 10px; /* Add padding for spacing inside the form */
+  padding: 10px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0px; /* Reduce margin-bottom if needed */
+  margin-bottom: 0;
+}
+
+.list-space-form {
+  width: 100px;
+  padding: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  margin-bottom: 0;
 }
 
 input[type="button"],
@@ -75,7 +84,7 @@ input[type="submit"] {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; /* Add this line to include padding and border in the width calculation */
+  box-sizing: border-box;
 }
 
 input[type="submit"] {
@@ -91,39 +100,100 @@ input[type="submit"]:hover {
   cursor: pointer;
 }
 
-/* Style for the "Request Booking" button */
 .request-button {
-  background-color: #f8a312; /* Change to your desired color */
+  background-color: #f8a312;
   color: #fff;
   margin-top: 3%;
 }
 
 .request-button:hover {
-  background-color: #be7e11; /* Change to your desired hover color */
+  background-color: #be7e11;
 }
 
-/* Style for the "Back" button */
 .back-button {
-  background-color: #ec433d; /* Change to your desired color */
+  background-color: #ec433d;
   color: #fff;
 }
 
 .back-button:hover {
-  background-color: #e22822; /* Change to your desired hover color */
+  background-color: #e22822;
   color: #fff;
 }
 
 .error-message {
   text-align: center;
   color: red;
-  padding: 10px; /* Add padding for better visibility */
-  background-color: #f44336; /* Background color for the error message */
-  color: #fff; /* Text color for the error message */
-  position: absolute; /* Position the error message absolutely */
-  left: 50%; /* Position it at the horizontal center of the viewport */
-  top: 10%; /* Position it at the top of the viewport */
-  transform: translateX(-50%); /* Center it horizontally */
-  z-index: 1; /* Ensure it's above other elements */
-  border: 1px solid #fff; /* Add a border */
-  border-radius: 4px; /* Add border radius for a rounded appearance */
+  padding: 10px;
+  background-color: #f44336;
+  color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  z-index: 1;
+  border: 1px solid #fff;
+  border-radius: 4px;
 }
+
+.room-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.room-block {
+  width: 300px;
+  margin: 8px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.room-block a {
+  text-decoration: none;
+  color: #333;
+}
+
+.room-block h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.room-details {
+  margin-top: 10px;
+}
+
+.room-details p {
+  margin-bottom: 5px;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.pagination a {
+  text-decoration: underline;
+  color: #261610;
+  padding: 5px 8px;
+  margin-left: 10px;
+  font-family: "Arial", sans-serif;
+  font-size: larger;
+  font-weight: bold;
+  text-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5);
+  background-color: #e8e8e8; /* Add this line to fill the inline block with a color */
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.pagination a:hover {
+  color: #ffffff;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  background-color: #9c9c9c; /* Add this line to change the background color when hovered */
+}
+
