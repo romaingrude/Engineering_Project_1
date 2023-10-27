@@ -28,7 +28,7 @@ def test_user_repo_create(db_connection):
 
     user_repo = UserRepository(db_connection)
 
-    new_user = User(None, "Romain", "romaingrude@yahoo.fr", "testpassword")
+    new_user = User(None, "Romain", "romaingrude@yahoo.fr", "12345")
     user_repo.create(new_user)
 
     # Get the created user from the repository
@@ -36,11 +36,8 @@ def test_user_repo_create(db_connection):
     created_user = users[-1]
 
     # Check if the password is encrypted
-    assert created_user.password != "testpassword"
-    assert (
-        hashlib.sha256("testpassword".encode("utf-8")).hexdigest()
-        == created_user.password
-    )
+    assert created_user.password != "12345"
+    assert hashlib.sha256("12345".encode("utf-8")).hexdigest() == created_user.password
     assert users == [
         User(1, "John", "test@gmail.com", "1234"),
         User(2, "Jane", "test2@gmail.com", "1234"),
