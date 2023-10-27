@@ -4,36 +4,52 @@
 <head>
   <meta charset="utf-8">
   <title>MakersBNB - Book a Space</title>
-  <link rel="stylesheet" type="text/css" href="">
+  <link rel="stylesheet" type="text/css" href="/static/room_show.css">
   <style>
-    /* body {
+    body {
       background-image: url("/static/background.jpg");
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
-    } */
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("/static/background.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      filter: blur(3px);
+      z-index: -1;
+    }
   </style>
 </head>
 
 <body>
-  <a href="/rooms" class="logo">
-    <img src="/static/logo.png" alt="MakersBNB Logo">
-  </a>
-  <div class="header-right">
-    <a class="active" href="/rooms">Rooms</a>
-    <a href="/bookings">Bookings</a>
-    {% if "user_id" in session %}
-    <a href="/logout">Sign Out</a>
-    {% else %}
-    <a href="/login">Log In</a>
-    <a href="/register">Register</a>
-    {% endif %}
+  <div class="header">
+    <a href="/rooms" class="logo">
+      <img src="/static/logo.png" alt="MakersBNB Logo">
+    </a>
+    <div class="menu-right">
+      <a href="/rooms">Rooms</a>
+      <a href="/bookings">Bookings</a>
+      {% if "user_id" in session %}
+      <a href="/logout">Sign Out</a>
+      {% else %}
+      <a href="/login">Log In</a>
+      <a href="/register">Register</a>
+      {% endif %}
+    </div>
   </div>
-
   <center>
     <h1>Book a Space</h1>
 
-    <form action="/rooms/room_new" method="GET">
+    <form class="list-space-form" action="/rooms/room_new" method="GET">
       <button type="submit">List a Space</button>
     </form>
   </center>
@@ -47,13 +63,28 @@
   {% endif %}
   {% endwith %}
 
-  {% for room in rooms %}
-  <p>
-    Name: <a href="/rooms/{{ room.id }}">{{ room.name }}</a><br>
-    Description: {{ room.description }}<br>
-    Price: £{{ room.price }}
-  </p><br>
-  {% endfor %}
+  <div class="room-list">
+    {% for room in rooms %}
+    <div class="room-block">
+      <a href="/rooms/{{ room.id }}">
+        <h2>{{ room.name }}</h2>
+      </a>
+      <div class="room-details">
+        <p>{{ room.description }}</p>
+        <p>Price/night: £{{ room.price }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="pagination">
+    {% if page > 1 %}
+    <a class="previous" href="/rooms?page={{ page - 1 }}">Previous</a>
+    {% endif %}
+    {% if has_next %}
+    <a class="next" href="/rooms?page={{ page + 1 }}">Next</a>
+    {% endif %}
+  </div>
 </body>
 
 </html>
