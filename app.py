@@ -314,6 +314,7 @@ def get_room_name_and_description_and_other_requests(booking_id):
     user = booking_repository.find_with_user(booking_id)
     bookings = booking_repository.find_all_bookings_for_this_room(booking_id)
     number_of_bookings = booking_repository.count_bookings_for_this_user(booking_id)
+    length_of_bookings = len(bookings)
     return render_template(
         "bookings/show.html",
         booking=booking,
@@ -321,6 +322,7 @@ def get_room_name_and_description_and_other_requests(booking_id):
         bookings=bookings,
         number_of_bookings=number_of_bookings,
         booking_id=booking_id,
+        length_of_bookings=length_of_bookings
     )
 
 
