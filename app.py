@@ -213,7 +213,10 @@ def get_index():
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    if "user_id" not in session:
+        return render_template("login.html")
+    else:
+        return redirect(url_for("get_rooms"))
 
 
 @app.route("/login", methods=["POST"])

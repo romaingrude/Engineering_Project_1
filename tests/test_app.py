@@ -1,6 +1,7 @@
 from playwright.sync_api import Page, expect
 from lib.user_repository import UserRepository
 from lib.user import User
+import time
 
 """
 We can render the index page
@@ -79,7 +80,7 @@ class TestLogin:
         expect(h1_tag).to_have_text("Account Login")
 
     """
-    When we enter the incorrect credentials, we are redirected to the error page
+    When we enter the incorrect credentials, we an error message
     """
 
     def test_login_post_incorrect_credentials(
@@ -88,10 +89,21 @@ class TestLogin:
         page.goto(f"http://{test_web_address}/login")
         page.fill("input[name=email]", "wrong@gmail.com")
         page.fill("input[name=password]", "random")
-        page.click("text=Log in")
+        page.click(".test-log-in")
 
-        h1_tag = page.locator("h1")
-        expect(h1_tag).to_have_text("Account Login")
+        p_tag = page.locator("p")
+        expect(p_tag).to_have_text("Invalid login details.")
+
+    """
+    When we try to login without entering any credentials, we get an error message
+    """
+
+    def test_login_post_empty_credentials(self, page, test_web_address, db_connection):
+        page.goto(f"http://{test_web_address}/login")
+        page.click(".test-log-in")
+
+        p_tag = page.locator("p")
+        expect(p_tag).to_have_text("Email is required. Password is required.")
 
     """
     When we enter the correct credentials, we are redirected to the temp page
@@ -109,7 +121,7 @@ class TestLogin:
         page.goto(f"http://{test_web_address}/login")
         page.fill("input[name=email]", "emailtest@gmail.com")
         page.fill("input[name=password]", "12345")
-        page.click("text=Log in")
-
+        h1_tag = page.locator("h1")
+        page.click(".test-log-in")
         h1_tag = page.locator("h1")
         expect(h1_tag).to_have_text("Book a Space")
