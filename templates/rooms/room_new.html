@@ -23,19 +23,20 @@
     </div>
   </div>
 
-  <center>
-    <h1>List a Space</h1>
-    <form action="/rooms" method="GET">
-      <p>
-        <label for="Name">Name</label>
-        <br>
-        <input type="text" name="name" id="name">
-      </p>
-      <p>
-        <label for="price">Price</label>
-        <br>
-        <input type="text" name="price" id="price">
-      </p>
+
+    <center>
+      <h1>List a Space</h1>
+      <form action="/rooms" method="POST">
+        <p>
+          <label for="Name">Name</label>
+          <br>
+          <input type="text" name="name" id="name">
+        </p>
+        <p>
+          <label for="price">Price</label>
+          <br>
+          <input type="text" name="price" id="price">
+        </p>
 
       <p>
         <label for="description">Description</label>
@@ -43,24 +44,14 @@
         <input type="text" name="description" id="description">
       </p>
 
-      <p>
-        <label for="start_date">Available From (DD/MM/YYYY)</label>
-        <br>
-        <input type="text" name="start_date" id="start_date">
-      </p>
+        <p>
+          <input type="submit" value="List my Space">
+        </p>
 
-      <p>
-        <label for="end_date">Available To (DD/MM/YYYY)</label>
-        <br>
-        <input type="text" name="end_date" id="end_date">
-      </p>
-      <p>
-        <input type="submit" value="List my Space">
-      </p>
+        <form>
+          <input type="button" value="Back" onclick="history.back()">
+        </form>
 
-      <form>
-        <input type="button" value="Back" onclick="history.back()">
-      </form>
 
     </form>
 

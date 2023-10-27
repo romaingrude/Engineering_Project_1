@@ -195,7 +195,6 @@ def get_new_room():
 def create_new_room():
     connection = get_flask_database_connection(app)
     repo = RoomsRepository(connection)
-
     name = request.form["name"]
     price = int(request.form["price"])
     description = request.form["description"]
