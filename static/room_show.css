@@ -62,8 +62,8 @@ form {
   padding: 10px;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-  margin-bottom: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
 }
 
 .list-space-form {
@@ -195,6 +195,42 @@ input[type="submit"]:hover {
   color: #ffffff;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
   background-color: #9c9c9c; /* Add this line to change the background color when hovered */
+}
+
+/* Bookings Show CSS */
+h1.title {
+  text-align: center;
+  margin-top: 50px;
+  font-family: "Arial", sans-serif;
+  color: #ffffff;
+  text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+}
+
+p.description {
+  text-align: center;
+  margin-top: 50px;
+  font-family: "Arial", sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+}
+
+.booking_card {
+  width: 300px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.booking_buttons_card {
+  width: 300px;
+  padding: 0px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
+  margin-right: 16px;
 }
 
 textarea#description {
