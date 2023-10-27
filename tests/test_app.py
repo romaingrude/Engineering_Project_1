@@ -45,8 +45,6 @@ def test_create_room(db_connection, page, test_web_address):
     page.fill("input[name=name]", "Room 3")
     page.fill("input[name=description]", "This is the third room.")
     page.fill("input[name=price]", "300")
-    page.fill("input[name=start_date]", "2021-12-12")
-    page.fill("input[name=end_date]", "2021-12-17")
 
     # Click the button with a valid CSS selector
     page.click("text=List my Space")
