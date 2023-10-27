@@ -45,7 +45,7 @@ def test_create_room(db_connection, page, test_web_address):
     expect(h1new_tag).to_have_text("List a Space")
 
     page.fill("input[name=name]", "Room 3")
-    page.fill("input[name=description]", "This is the third room.")
+    page.fill("textarea[name=description]", "This is the third room.")
     page.fill("input[name=price]", "300")
 
     # Click the button with a valid CSS selector
