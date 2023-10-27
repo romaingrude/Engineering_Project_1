@@ -22,6 +22,7 @@
     align-items: center;
     padding: 10px;
   }
+
   .menu-right {
     text-align: right;
     font-family: "Arial", sans-serif;
@@ -30,12 +31,13 @@
   }
   
   .menu-right a {
+    font-weight: bold;
     vertical-align: top;
     margin-left: 10px;
     text-decoration: none;
-    color: #ede9e9;
+    color: #362d2d;
     padding: 5px 8px; /* Add padding to create more visual separation */
-    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4); /* Add this line to add a text shadow effect on hover */
+    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6); /* Add this line to add a text shadow effect on hover */
 
   }
   
@@ -50,7 +52,7 @@
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   }
   
   label {
