@@ -47,5 +47,5 @@ CREATE TABLE bookings (
     ON DELETE CASCADE
 );
 
-INSERT INTO bookings (user_id, room_id, confirmation, booking_start, booking_end) VALUES (1, 2, True, '2021-01-01', '2021-01-02');
-INSERT INTO bookings (user_id, room_id, confirmation, booking_start, booking_end) VALUES (2, 1, False, '2021-01-01', '2021-01-02');
+INSERT INTO bookings (user_id, room_id, confirmation, booking_start, booking_end) VALUES (1, 1, True, '2023-11-01', '2023-11-10');
+INSERT INTO bookings (user_id, room_id, confirmation, booking_start, booking_end) VALUES (2, 2, False, '2023-11-01', '2023-11-15');
