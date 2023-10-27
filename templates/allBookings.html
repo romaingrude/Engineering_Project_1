@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <link rel="stylesheet" href="../static/allBookings.css">
+    <title>
+        Requests | MakersBnB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="MakersBnB user's booking requests.">
+</head>
+
+<div id="header_div">
+    <div id="logo">
+        <a href="..\pages\home.html"><img id="logo_img" src="..\media\logoimage.png"></img></a>
+    </div>
+
+    <ul id="menulinks_div">
+        <li id="menuitem"><a href="spaces.html">Spaces</a></li>
+        <li id="menuitem"><a href="allBookings.html">Requests</a></li>
+        <li id="menuitem"><a href="signout.html">Sign out</a></li>
+    </ul>
+
+    <body>
+        <div id="title_div">Requests</div>
+        <div id="topflavour_div">All requests made by and for the user {{username}}.</div>
+
+        <div class="parent">
+            <div class="child">
+                <ul id="requestedBookings_div">
+                    {% for booking in requestedBookings %}
+                    <li>
+                        <ul>
+                            <li>{{booking.name}}</li>
+                            <li>{% if booking.confirmation==True %}Confirmed{% else %}Not confirmed{% endif %}</li>
+                            <li>{{booking.booking_start}}</li>
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="child">
+                <ul id="bookingRequests_div">
+                    {% for booking in bookingRequests %}
+                    <li>
+                        <ul>
+                            <li>{{booking.name}}</li>
+                            <li>{% if booking.confirmation==True %}Confirmed{% else %}Not confirmed{% endif %}</li>
+                            <li>{{booking.booking_start}}</li>
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </body>
+
+</html>

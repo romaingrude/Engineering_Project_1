@@ -12,6 +12,7 @@ from flask import (
 from lib.database_connection import get_flask_database_connection
 from lib.user_repository import UserRepository
 from lib.rooms_repository import RoomsRepository
+from lib.booking import Booking
 from lib.booking_repository import BookingRepository
 import secrets
 from flask_wtf import FlaskForm
@@ -209,6 +210,19 @@ def create_new_room():
 @app.route("/")
 def get_index():
     return render_template("index.html")
+
+
+@app.route("/requests")
+def get_requests():
+    # ToDo: Get User Id
+    userId = 2
+    connection = get_flask_database_connection(app)
+    repository = BookingRepository(connection)
+    requested = repository.getRequestedByUserId(userId)
+    requests = repository.getRequestsForUserId(userId)
+    return render_template(
+        "allBookings.html", requestedBookings=requested, bookingRequests=requests
+    )
 
 
 # LOGIN

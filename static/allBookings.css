@@ -1,0 +1,99 @@
+body {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    display: inline;
+    height: 100vh;
+    margin: 0;
+    background-color: #f2f2f2;
+}
+
+.parent {
+    margin: 1rem;
+    padding: 2rem 2rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.child {
+    border: 1px solid #2d2d2d;
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px 10px;
+    float: left;
+    width: 50%;
+    padding: 5px;
+    height: 500px;
+    display: inline;
+}
+
+#header_div {
+    position: sticky;
+    top: 0;
+    left: 0px;
+    right: 0px;
+    height: 90px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    z-index: 1;
+    text-align: center;
+    margin-top: 0;
+    font-family: "Arial", sans-serif;
+    /* Change the font family to your desired font */
+}
+
+/*Nav CSS*/
+#menulinks_div {
+    position: absolute;
+    right: 40px;
+    top: 0px;
+    margin: 0px;
+    font-size: 0.9833em;
+    list-style-type: none;
+    text-align: center;
+}
+
+#menuitem {
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 5px;
+    color: #2D2E2E;
+    color: #626A6A;
+}
+
+/*Nav CSS End*/
+
+
+#title_div {
+    text-align: center;
+    font-size: 40px;
+    padding-top: 2.5%;
+    color: #000000;
+}
+
+#topflavour_div {
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    padding-top: 5%;
+    color: #000000;
+}
+
+#requestedBookings_div {
+    padding-top: 5%;
+    width: 50%;
+    text-align: center;
+    list-style-type: none;
+}
+
+#bookingRequests_div {
+    padding-top: 5%;
+    width: 50%;
+    text-align: center;
+    list-style-type: none;
+}
+
+li {
+    list-style-type: none;
+}
