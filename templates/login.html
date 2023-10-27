@@ -4,23 +4,63 @@
 <head>
   <title>Login Page</title>
   <link rel="stylesheet" type="text/css" href="/static/login.css">
+  <style>
+    body {
+      background-image: url("/static/background.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("/static/background.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      filter: blur(3px);
+      z-index: -1;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Account Login</h1>
-    <form action="/login" method="post">
-      <label for="email">Email:</label>
-      <input type="text" id="email" name="email"><br><br>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password"><br><br>
-      <input type="submit" value="Log in">
-      {% if error_message %}
-      <p class="error-message">{{ error_message }}</p>
+  <div class="background"></div>
+  <div class="header">
+    <a href="/rooms" class="logo">
+      <img src="/static/logo.png" alt="MakersBNB Logo">
+    </a>
+    <div class="menu-right">
+      <a href="/rooms">Rooms</a>
+      <a href="/bookings">Bookings</a>
+      {% if "user_id" in session %}
+      <a href="/logout">Sign Out</a>
+      {% else %}
+      <a href="/login">Log In</a>
+      <a href="/register">Register</a>
       {% endif %}
-    </form>
+    </div>
   </div>
+  <center>
+    <div class="container">
+      <h1>Account Login</h1>
+      <form action="/login" method="post">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <input class="test-log-in" type="submit" value="Log in">
+        {% if error_message %}
+        <p class="error-message-login">{{ error_message }}</p>
+        {% endif %}
+      </form>
+    </div>
+  </center>
 </body>
-
 
 </html>
