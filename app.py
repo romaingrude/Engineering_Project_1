@@ -211,7 +211,8 @@ def create_new_room():
 def get_index():
     return render_template("index.html")
 
-@app.route('/requests')
+
+@app.route("/requests")
 def get_requests():
     # ToDo: Get User Id
     userId = 2
@@ -219,7 +220,10 @@ def get_requests():
     repository = BookingRepository(connection)
     requested = repository.getRequestedByUserId(userId)
     requests = repository.getRequestsForUserId(userId)
-    return render_template("allBookings.html", requestedBookings=requested, bookingRequests=requests)
+    return render_template(
+        "allBookings.html", requestedBookings=requested, bookingRequests=requests
+    )
+
 
 # LOGIN
 @app.route("/login")
