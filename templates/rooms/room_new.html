@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <title>MakersBNB - List a Space</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="/rooms" class="logo">
+      <img src="/static/logo.png" alt="MakersBNB Logo">
+    </a>
+    <div class="menu-right">
+      <a href="/rooms">Rooms</a>
+      <a href="/bookings">Bookings</a>
+      {% if "user_id" in session %}
+      <a href="/logout">Sign Out</a>
+      {% else %}
+      <a href="/login">Log In</a>
+      <a href="/register">Register</a>
+      {% endif %}
+    </div>
+  </div>
+
+
+    <center>
+      <h1>List a Space</h1>
+      <form action="/rooms" method="POST">
+        <p>
+          <label for="Name">Name</label>
+          <br>
+          <input type="text" name="name" id="name">
+        </p>
+        <p>
+          <label for="price">Price</label>
+          <br>
+          <input type="text" name="price" id="price">
+        </p>
+
+      <p>
+        <label for="description">Description</label>
+        <br>
+        <input type="text" name="description" id="description">
+      </p>
+
+        <p>
+          <input type="submit" value="List my Space">
+        </p>
+
+        <form>
+          <input type="button" value="Back" onclick="history.back()">
+        </form>
+
+
+    </form>
+
+
+  </center>
+</body>
+
+</html>
