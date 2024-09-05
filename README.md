@@ -2,7 +2,7 @@
 
 ## Overview
 
-The MakersBnB project was a collaborative assignment undertaken as part of the Software Engineering course at Makers. This project involved a team of six, including myself, working together over the span of one week to develop a fully functional booking platform. The project aimed to simulate a real-world software development environment, where team collaboration, technical skills, and time management were crucial.
+The MakersBnB project was a collaborative assignment undertaken as part of the Software Engineering course at Makers. This project involved a team of five, working together over the span of one week to develop a fully functional booking platform. The project aimed to simulate a real-world software development environment, where team collaboration, technical skills, and time management were crucial.
 
 ## Project Description
 
@@ -16,13 +16,13 @@ This repository contains the codebase for the MakersBnB application, developed u
 
 ## Team Collaboration
 
-The project was a team effort, and collaboration was key to its success. We utilized GitHub for version control and managed our development process by forking the seed repository, cloning it to our local machines, and contributing to the codebase. Each team member played a specific role, contributing to various aspects of the project, from coding to testing.
+The project was a team effort, and collaboration was key to its success. We utilised GitHub for version control and managed our development process by forking the seed repository, cloning it to our local machines, and contributing to the codebase. Each team member played a specific role, contributing to various aspects of the project, from coding to testing.
 
 ## Key Learnings
 
 - **Team Dynamics**: Gained experience in working effectively within a team, managing responsibilities, and coordinating efforts to achieve a common goal.
 - **Full-Stack Development**: Developed skills in both frontend and backend development, integrating various technologies to build a cohesive application.
-- **Project Management**: Learned to manage time efficiently and prioritize tasks to meet project deadlines.
+- **Project Management**: Learned to manage time efficiently and prioritise tasks to meet project deadlines.
 
 ## Challenges
 
